@@ -4,8 +4,7 @@ import asyncio
 from fastapi import FastAPI, WebSocket
 from fastapi.responses import HTMLResponse
 from openai import OpenAI
-from deepgram import DeepgramClient, LiveTranscriptionEvents
-from deepgram.clients.live.v1 import LiveOptions
+from deepgram import DeepgramClient, LiveTranscriptionEvents, LiveOptions
 
 app = FastAPI()
 
@@ -165,7 +164,7 @@ async def websocket_endpoint(websocket: WebSocket):
     loop = asyncio.get_event_loop()
     
     options = LiveOptions(model="nova-2", language="he", smart_format=True, diarize=True, punctuate=True, interim_results=False)
-    dg_connection = dg_client.listen.live.v("1")
+    dg_connection = dg_client.listen.websocket.v("1")
     
     def on_transcript(self, result, **kwargs):
         try:
